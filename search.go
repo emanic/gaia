@@ -1,0 +1,473 @@
+package gaia
+
+import (
+	"fmt"
+
+	"github.com/mitchellh/copystructure"
+	"go.aporeto.io/elemental"
+)
+
+// SearchIdentity represents the Identity of the object.
+var SearchIdentity = elemental.Identity{
+	Name:     "search",
+	Category: "search",
+	Package:  "gogole",
+	Private:  false,
+}
+
+// SearchsList represents a list of Searchs
+type SearchsList []*Search
+
+// Identity returns the identity of the objects in the list.
+func (o SearchsList) Identity() elemental.Identity {
+
+	return SearchIdentity
+}
+
+// Copy returns a pointer to a copy the SearchsList.
+func (o SearchsList) Copy() elemental.Identifiables {
+
+	copy := append(SearchsList{}, o...)
+	return &copy
+}
+
+// Append appends the objects to the a new copy of the SearchsList.
+func (o SearchsList) Append(objects ...elemental.Identifiable) elemental.Identifiables {
+
+	out := append(SearchsList{}, o...)
+	for _, obj := range objects {
+		out = append(out, obj.(*Search))
+	}
+
+	return out
+}
+
+// List converts the object to an elemental.IdentifiablesList.
+func (o SearchsList) List() elemental.IdentifiablesList {
+
+	out := make(elemental.IdentifiablesList, len(o))
+	for i := 0; i < len(o); i++ {
+		out[i] = o[i]
+	}
+
+	return out
+}
+
+// DefaultOrder returns the default ordering fields of the content.
+func (o SearchsList) DefaultOrder() []string {
+
+	return []string{}
+}
+
+// ToSparse returns the SearchsList converted to SparseSearchsList.
+// Objects in the list will only contain the given fields. No field means entire field set.
+func (o SearchsList) ToSparse(fields ...string) elemental.Identifiables {
+
+	out := make(SparseSearchsList, len(o))
+	for i := 0; i < len(o); i++ {
+		out[i] = o[i].ToSparse(fields...).(*SparseSearch)
+	}
+
+	return out
+}
+
+// Version returns the version of the content.
+func (o SearchsList) Version() int {
+
+	return 1
+}
+
+// Search represents the model of a search
+type Search struct {
+	// Contains the ID of the match.
+	ObjectID string `json:"objectID" msgpack:"objectID" bson:"-" mapstructure:"objectID,omitempty"`
+
+	// Contains the identity of the match.
+	ObjectIdentity string `json:"objectIdentity" msgpack:"objectIdentity" bson:"-" mapstructure:"objectIdentity,omitempty"`
+
+	// Contains the score of the match.
+	Score float64 `json:"score" msgpack:"score" bson:"-" mapstructure:"score,omitempty"`
+
+	ModelVersion int `json:"-" msgpack:"-" bson:"_modelversion"`
+}
+
+// NewSearch returns a new *Search
+func NewSearch() *Search {
+
+	return &Search{
+		ModelVersion: 1,
+	}
+}
+
+// Identity returns the Identity of the object.
+func (o *Search) Identity() elemental.Identity {
+
+	return SearchIdentity
+}
+
+// Identifier returns the value of the object's unique identifier.
+func (o *Search) Identifier() string {
+
+	return ""
+}
+
+// SetIdentifier sets the value of the object's unique identifier.
+func (o *Search) SetIdentifier(id string) {
+
+}
+
+// Version returns the hardcoded version of the model.
+func (o *Search) Version() int {
+
+	return 1
+}
+
+// DefaultOrder returns the list of default ordering fields.
+func (o *Search) DefaultOrder() []string {
+
+	return []string{}
+}
+
+// Doc returns the documentation for the object
+func (o *Search) Doc() string {
+
+	return `Perform a full text search on the database.`
+}
+
+func (o *Search) String() string {
+
+	return fmt.Sprintf("<%s:%s>", o.Identity().Name, o.Identifier())
+}
+
+// ToSparse returns the sparse version of the model.
+// The returned object will only contain the given fields. No field means entire field set.
+func (o *Search) ToSparse(fields ...string) elemental.SparseIdentifiable {
+
+	if len(fields) == 0 {
+		// nolint: goimports
+		return &SparseSearch{
+			ObjectID:       &o.ObjectID,
+			ObjectIdentity: &o.ObjectIdentity,
+			Score:          &o.Score,
+		}
+	}
+
+	sp := &SparseSearch{}
+	for _, f := range fields {
+		switch f {
+		case "objectID":
+			sp.ObjectID = &(o.ObjectID)
+		case "objectIdentity":
+			sp.ObjectIdentity = &(o.ObjectIdentity)
+		case "score":
+			sp.Score = &(o.Score)
+		}
+	}
+
+	return sp
+}
+
+// Patch apply the non nil value of a *SparseSearch to the object.
+func (o *Search) Patch(sparse elemental.SparseIdentifiable) {
+	if !sparse.Identity().IsEqual(o.Identity()) {
+		panic("cannot patch from a parse with different identity")
+	}
+
+	so := sparse.(*SparseSearch)
+	if so.ObjectID != nil {
+		o.ObjectID = *so.ObjectID
+	}
+	if so.ObjectIdentity != nil {
+		o.ObjectIdentity = *so.ObjectIdentity
+	}
+	if so.Score != nil {
+		o.Score = *so.Score
+	}
+}
+
+// DeepCopy returns a deep copy if the Search.
+func (o *Search) DeepCopy() *Search {
+
+	if o == nil {
+		return nil
+	}
+
+	out := &Search{}
+	o.DeepCopyInto(out)
+
+	return out
+}
+
+// DeepCopyInto copies the receiver into the given *Search.
+func (o *Search) DeepCopyInto(out *Search) {
+
+	target, err := copystructure.Copy(o)
+	if err != nil {
+		panic(fmt.Sprintf("Unable to deepcopy Search: %s", err))
+	}
+
+	*out = *target.(*Search)
+}
+
+// Validate valides the current information stored into the structure.
+func (o *Search) Validate() error {
+
+	errors := elemental.Errors{}
+	requiredErrors := elemental.Errors{}
+
+	if len(requiredErrors) > 0 {
+		return requiredErrors
+	}
+
+	if len(errors) > 0 {
+		return errors
+	}
+
+	return nil
+}
+
+// SpecificationForAttribute returns the AttributeSpecification for the given attribute name key.
+func (*Search) SpecificationForAttribute(name string) elemental.AttributeSpecification {
+
+	if v, ok := SearchAttributesMap[name]; ok {
+		return v
+	}
+
+	// We could not find it, so let's check on the lower case indexed spec map
+	return SearchLowerCaseAttributesMap[name]
+}
+
+// AttributeSpecifications returns the full attribute specifications map.
+func (*Search) AttributeSpecifications() map[string]elemental.AttributeSpecification {
+
+	return SearchAttributesMap
+}
+
+// ValueForAttribute returns the value for the given attribute.
+// This is a very advanced function that you should not need but in some
+// very specific use cases.
+func (o *Search) ValueForAttribute(name string) interface{} {
+
+	switch name {
+	case "objectID":
+		return o.ObjectID
+	case "objectIdentity":
+		return o.ObjectIdentity
+	case "score":
+		return o.Score
+	}
+
+	return nil
+}
+
+// SearchAttributesMap represents the map of attribute for Search.
+var SearchAttributesMap = map[string]elemental.AttributeSpecification{
+	"ObjectID": elemental.AttributeSpecification{
+		AllowedChoices: []string{},
+		Autogenerated:  true,
+		ConvertedName:  "ObjectID",
+		Description:    `Contains the ID of the match.`,
+		Exposed:        true,
+		Name:           "objectID",
+		ReadOnly:       true,
+		Type:           "string",
+	},
+	"ObjectIdentity": elemental.AttributeSpecification{
+		AllowedChoices: []string{},
+		Autogenerated:  true,
+		ConvertedName:  "ObjectIdentity",
+		Description:    `Contains the identity of the match.`,
+		Exposed:        true,
+		Name:           "objectIdentity",
+		ReadOnly:       true,
+		Type:           "string",
+	},
+	"Score": elemental.AttributeSpecification{
+		AllowedChoices: []string{},
+		Autogenerated:  true,
+		ConvertedName:  "Score",
+		Description:    `Contains the score of the match.`,
+		Exposed:        true,
+		Name:           "score",
+		ReadOnly:       true,
+		Type:           "float",
+	},
+}
+
+// SearchLowerCaseAttributesMap represents the map of attribute for Search.
+var SearchLowerCaseAttributesMap = map[string]elemental.AttributeSpecification{
+	"objectid": elemental.AttributeSpecification{
+		AllowedChoices: []string{},
+		Autogenerated:  true,
+		ConvertedName:  "ObjectID",
+		Description:    `Contains the ID of the match.`,
+		Exposed:        true,
+		Name:           "objectID",
+		ReadOnly:       true,
+		Type:           "string",
+	},
+	"objectidentity": elemental.AttributeSpecification{
+		AllowedChoices: []string{},
+		Autogenerated:  true,
+		ConvertedName:  "ObjectIdentity",
+		Description:    `Contains the identity of the match.`,
+		Exposed:        true,
+		Name:           "objectIdentity",
+		ReadOnly:       true,
+		Type:           "string",
+	},
+	"score": elemental.AttributeSpecification{
+		AllowedChoices: []string{},
+		Autogenerated:  true,
+		ConvertedName:  "Score",
+		Description:    `Contains the score of the match.`,
+		Exposed:        true,
+		Name:           "score",
+		ReadOnly:       true,
+		Type:           "float",
+	},
+}
+
+// SparseSearchsList represents a list of SparseSearchs
+type SparseSearchsList []*SparseSearch
+
+// Identity returns the identity of the objects in the list.
+func (o SparseSearchsList) Identity() elemental.Identity {
+
+	return SearchIdentity
+}
+
+// Copy returns a pointer to a copy the SparseSearchsList.
+func (o SparseSearchsList) Copy() elemental.Identifiables {
+
+	copy := append(SparseSearchsList{}, o...)
+	return &copy
+}
+
+// Append appends the objects to the a new copy of the SparseSearchsList.
+func (o SparseSearchsList) Append(objects ...elemental.Identifiable) elemental.Identifiables {
+
+	out := append(SparseSearchsList{}, o...)
+	for _, obj := range objects {
+		out = append(out, obj.(*SparseSearch))
+	}
+
+	return out
+}
+
+// List converts the object to an elemental.IdentifiablesList.
+func (o SparseSearchsList) List() elemental.IdentifiablesList {
+
+	out := make(elemental.IdentifiablesList, len(o))
+	for i := 0; i < len(o); i++ {
+		out[i] = o[i]
+	}
+
+	return out
+}
+
+// DefaultOrder returns the default ordering fields of the content.
+func (o SparseSearchsList) DefaultOrder() []string {
+
+	return []string{}
+}
+
+// ToPlain returns the SparseSearchsList converted to SearchsList.
+func (o SparseSearchsList) ToPlain() elemental.IdentifiablesList {
+
+	out := make(elemental.IdentifiablesList, len(o))
+	for i := 0; i < len(o); i++ {
+		out[i] = o[i].ToPlain()
+	}
+
+	return out
+}
+
+// Version returns the version of the content.
+func (o SparseSearchsList) Version() int {
+
+	return 1
+}
+
+// SparseSearch represents the sparse version of a search.
+type SparseSearch struct {
+	// Contains the ID of the match.
+	ObjectID *string `json:"objectID,omitempty" msgpack:"objectID,omitempty" bson:"-" mapstructure:"objectID,omitempty"`
+
+	// Contains the identity of the match.
+	ObjectIdentity *string `json:"objectIdentity,omitempty" msgpack:"objectIdentity,omitempty" bson:"-" mapstructure:"objectIdentity,omitempty"`
+
+	// Contains the score of the match.
+	Score *float64 `json:"score,omitempty" msgpack:"score,omitempty" bson:"-" mapstructure:"score,omitempty"`
+
+	ModelVersion int `json:"-" msgpack:"-" bson:"_modelversion"`
+}
+
+// NewSparseSearch returns a new  SparseSearch.
+func NewSparseSearch() *SparseSearch {
+	return &SparseSearch{}
+}
+
+// Identity returns the Identity of the sparse object.
+func (o *SparseSearch) Identity() elemental.Identity {
+
+	return SearchIdentity
+}
+
+// Identifier returns the value of the sparse object's unique identifier.
+func (o *SparseSearch) Identifier() string {
+
+	return ""
+}
+
+// SetIdentifier sets the value of the sparse object's unique identifier.
+func (o *SparseSearch) SetIdentifier(id string) {
+
+}
+
+// Version returns the hardcoded version of the model.
+func (o *SparseSearch) Version() int {
+
+	return 1
+}
+
+// ToPlain returns the plain version of the sparse model.
+func (o *SparseSearch) ToPlain() elemental.PlainIdentifiable {
+
+	out := NewSearch()
+	if o.ObjectID != nil {
+		out.ObjectID = *o.ObjectID
+	}
+	if o.ObjectIdentity != nil {
+		out.ObjectIdentity = *o.ObjectIdentity
+	}
+	if o.Score != nil {
+		out.Score = *o.Score
+	}
+
+	return out
+}
+
+// DeepCopy returns a deep copy if the SparseSearch.
+func (o *SparseSearch) DeepCopy() *SparseSearch {
+
+	if o == nil {
+		return nil
+	}
+
+	out := &SparseSearch{}
+	o.DeepCopyInto(out)
+
+	return out
+}
+
+// DeepCopyInto copies the receiver into the given *SparseSearch.
+func (o *SparseSearch) DeepCopyInto(out *SparseSearch) {
+
+	target, err := copystructure.Copy(o)
+	if err != nil {
+		panic(fmt.Sprintf("Unable to deepcopy SparseSearch: %s", err))
+	}
+
+	*out = *target.(*SparseSearch)
+}
