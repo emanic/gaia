@@ -26,6 +26,8 @@ model:
   - '@identifiable-stored'
   - '@named'
   - '@timeable'
+  validations:
+  - $automations
 
 # Attributes
 attributes:
@@ -130,6 +132,16 @@ attributes:
     - Time
     default_value: Time
     orderable: true
+
+  - name: webhookMode
+    description: |-
+      WebhookMode applies only to automations with a RemoteCall trigger mode. If set
+      to true, the call to the trigger will block until the defined action has been
+      processed. This is particularly useful if you are using an automation to process
+      a webhook. Only one action can be defined if this option is enabled.
+    type: boolean
+    exposed: true
+    stored: true
 
 # Relations
 relations:

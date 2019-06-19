@@ -1,7 +1,10 @@
 package gaia
 
 import (
+	"net/http"
 	"testing"
+
+	"go.aporeto.io/elemental"
 )
 
 func TestValidatePortString(t *testing.T) {
@@ -904,6 +907,107 @@ func TestValidateOptionalNetworkList(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := ValidateOptionalNetworkList(tt.args.attribute, tt.args.networks); (err != nil) != tt.wantErr {
 				t.Errorf("ValidateOptionalNetworkList() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestValidateAutomation(t *testing.T) {
+	testCases := []struct {
+		scenario    string
+		automation  *Automation
+		shouldError bool
+	}{
+		{
+			scenario: "should not return an error if webhookMode is false and multiple actions have been defined",
+			automation: &Automation{
+				Trigger: AutomationTriggerRemoteCall,
+				Actions: []string{
+					"Action 1",
+					"Action 2",
+				},
+				WebhookMode: false,
+			},
+			shouldError: false,
+		},
+		{
+			scenario: "should not return an error if trigger type is not RemoteCall and multiple actions have been defined",
+			automation: &Automation{
+				Trigger: AutomationTriggerEvent,
+				Actions: []string{
+					"Action 1",
+					"Action 2",
+				},
+			},
+			shouldError: false,
+		},
+		{
+			scenario: "should not return an error if webhookMode is true and only one action has been defined",
+			automation: &Automation{
+				Trigger: AutomationTriggerRemoteCall,
+				Actions: []string{
+					"Action 1",
+				},
+				WebhookMode: true,
+			},
+			shouldError: false,
+		},
+		{
+			scenario: "should return an error if webhookMode is true and more than one action has been defined",
+			automation: &Automation{
+				Trigger: AutomationTriggerRemoteCall,
+				Actions: []string{
+					"Action 1",
+					"Action 2",
+				},
+				WebhookMode: true,
+			},
+			shouldError: true,
+		},
+		{
+			scenario: "should return an error if webhookMode is true and no actions have been defined",
+			automation: &Automation{
+				Trigger:     AutomationTriggerRemoteCall,
+				Actions:     nil,
+				WebhookMode: true,
+			},
+			shouldError: true,
+		},
+		{
+			scenario: "should return an error if webhookMode is true and trigger type is not RemoteCall",
+			automation: &Automation{
+				Trigger: AutomationTriggerEvent,
+				Actions: nil,
+				// webhook mode is only applicable if the automation trigger type is RemoteCall
+				WebhookMode: true,
+			},
+			shouldError: true,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.scenario, func(t *testing.T) {
+			err := ValidateAutomation(tc.automation)
+			switch {
+			case err != nil && tc.shouldError:
+
+				ee, ok := err.(elemental.Error)
+				if !ok {
+					t.Fatalf("error could not be asserted to type \"elemental.Error\"")
+				}
+
+				if ee.Code != http.StatusUnprocessableEntity {
+					t.Errorf("expected elemental error code to be 422, but got %d", ee.Code)
+				}
+
+				if ee.Title != "Validation Error" {
+					t.Errorf("expected elemental error code to be 'Validation Error', but got %s", ee.Title)
+				}
+
+			case err != nil && !tc.shouldError:
+				t.Fatalf("did not expect to get an error, but received: %+v", err)
+			case err == nil && tc.shouldError:
+				t.Fatalf("expected to get an error, but got nothing")
 			}
 		})
 	}

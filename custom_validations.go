@@ -419,6 +419,28 @@ func ValidateHTTPMethods(attribute string, methods []string) error {
 	return nil
 }
 
+// ValidateAutomation validates an automation
+func ValidateAutomation(auto *Automation) error {
+	switch auto.Trigger {
+	case AutomationTriggerRemoteCall:
+		if auto.WebhookMode {
+			switch len(auto.Actions) {
+			case 1:
+			case 0:
+				return makeValidationError("webhookMode", "An action must be defined if webhook mode is set to true.")
+			default:
+				return makeValidationError("webhookMode", "Only one action can be defined if webhook mode is set to true.")
+			}
+		}
+	default:
+		if auto.WebhookMode {
+			return makeValidationError("webhookMode", fmt.Sprintf("webhook mode is only applicable if the automation trigger type is %s", AutomationTriggerRemoteCall))
+		}
+	}
+
+	return nil
+}
+
 // ValidateHostServices validates a host service. Applies to the new API only.
 func ValidateHostServices(hs *HostService) error {
 
