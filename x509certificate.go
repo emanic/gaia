@@ -173,6 +173,12 @@ func (o *X509Certificate) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *X509Certificate) BleveType() string {
+
+	return "x509certificate"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *X509Certificate) DefaultOrder() []string {
 

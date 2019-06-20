@@ -118,6 +118,12 @@ func (o *Auth) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *Auth) BleveType() string {
+
+	return "auth"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *Auth) DefaultOrder() []string {
 

@@ -207,6 +207,12 @@ func (o *AppCredential) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *AppCredential) BleveType() string {
+
+	return "appcredential"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *AppCredential) DefaultOrder() []string {
 

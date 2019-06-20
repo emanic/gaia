@@ -297,6 +297,12 @@ func (o *ProcessingUnit) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *ProcessingUnit) BleveType() string {
+
+	return "processingunit"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *ProcessingUnit) DefaultOrder() []string {
 

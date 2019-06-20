@@ -116,6 +116,12 @@ func (o *Jaegerbatch) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *Jaegerbatch) BleveType() string {
+
+	return "jaegerbatch"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *Jaegerbatch) DefaultOrder() []string {
 

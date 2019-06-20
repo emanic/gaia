@@ -207,6 +207,12 @@ func (o *Recipe) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *Recipe) BleveType() string {
+
+	return "recipe"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *Recipe) DefaultOrder() []string {
 

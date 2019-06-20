@@ -221,6 +221,12 @@ func (o *HookPolicy) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *HookPolicy) BleveType() string {
+
+	return "hookpolicy"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *HookPolicy) DefaultOrder() []string {
 

@@ -128,6 +128,12 @@ func (o *Search) Version() int {
 	return 1
 }
 
+// BleveType implements the bleve.Classifier Interface.
+func (o *Search) BleveType() string {
+
+	return "search"
+}
+
 // DefaultOrder returns the list of default ordering fields.
 func (o *Search) DefaultOrder() []string {
 
