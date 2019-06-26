@@ -5,7 +5,7 @@ PROJECT_SHA ?= $(shell git rev-parse HEAD)
 PROJECT_VERSION ?= $(lastword $(shell git tag --sort version:refname --merged $(shell git rev-parse --abbrev-ref HEAD)))
 PROJECT_RELEASE ?= dev
 
-ci: init lint test
+ci: init lint test spelling
 
 init:
 	go get -u github.com/aporeto-inc/go-bindata/...
@@ -28,7 +28,6 @@ codegen:
 
 lint:
 	# --enable=unparam
-	docker run -ti -v $(pwd) tmaier/markdown-spellcheck:latest "doc/*.md" -r -a -n --en-us
 	golangci-lint run \
 		--disable-all \
 		--exclude-use-default=false \
@@ -46,6 +45,9 @@ lint:
 		--enable=prealloc \
 		--enable=nakedret \
 		./...
+
+spelling:
+   docker run --rm -v $$PWD:/workdir tmaier/markdown-spellcheck:latest "doc/*.md" -r -a -n --en-us
 
 .PHONY: test
 test:
