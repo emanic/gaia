@@ -28,7 +28,7 @@ codegen:
 
 lint:
 	# --enable=unparam
-	docker run -ti -v $(pwd):/workdir tmaier/markdown-spellcheck:latest "doc/*.md" -r -a -n --en-us
+	docker run -ti -v $(pwd) tmaier/markdown-spellcheck:latest "doc/*.md" -r -a -n --en-us
 	golangci-lint run \
 		--disable-all \
 		--exclude-use-default=false \
