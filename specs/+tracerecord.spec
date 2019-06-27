@@ -12,7 +12,7 @@ model:
 attributes:
   v1:
   - name: TTL
-    description: TTL is the TTL value of the packet.
+    description: The time to live (TTL) value of the packet.
     type: integer
     exposed: true
     stored: true
@@ -21,7 +21,7 @@ attributes:
     max_value: 255
 
   - name: chain
-    description: Chain is the chain that the trace was collected from.
+    description: Chain that the trace was collected from.
     type: string
     exposed: true
     stored: true
@@ -29,7 +29,7 @@ attributes:
     example_value: PREROUTING
 
   - name: destinationIP
-    description: DestinationIP is the destination IP.
+    description: The destination IP.
     type: string
     exposed: true
     stored: true
@@ -37,7 +37,7 @@ attributes:
     example_value: 10.1.1.30
 
   - name: destinationInterface
-    description: DestinationInterface is the destination interface of the packet.
+    description: The destination interface of the packet.
     type: string
     exposed: true
     stored: true

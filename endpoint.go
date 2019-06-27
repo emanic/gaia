@@ -15,13 +15,13 @@ type Endpoint struct {
 	// AllowedScopes authorized to access the API.
 	AllowedScopes [][]string `json:"allowedScopes" msgpack:"allowedScopes" bson:"allowedscopes" mapstructure:"allowedScopes,omitempty"`
 
-	// methods exposed to access the API.
+	// Methods exposed to access the API.
 	Methods []string `json:"methods" msgpack:"methods" bson:"methods" mapstructure:"methods,omitempty"`
 
-	// public defines if the api is public or not.
+	// If `+"`"+`true`+"`"+`, the API is public.
 	Public bool `json:"public" msgpack:"public" bson:"public" mapstructure:"public,omitempty"`
 
-	// Scopes is deprecated.
+	// Use `+"`"+`allowedScopes`+"`"+`.
 	Scopes []string `json:"scopes" msgpack:"scopes" bson:"-" mapstructure:"scopes,omitempty"`
 
 	ModelVersion int `json:"-" msgpack:"-" bson:"_modelversion"`

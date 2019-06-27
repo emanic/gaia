@@ -225,7 +225,7 @@ func (o *AppCredential) DefaultOrder() []string {
 // Doc returns the documentation for the object
 func (o *AppCredential) Doc() string {
 
-	return `Create a credential for an application.`
+	return `Create an app credential.`
 }
 
 func (o *AppCredential) String() string {
