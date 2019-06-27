@@ -47,7 +47,7 @@ lint:
 		./...
 
 spelling:
-   docker run --rm -v $$PWD:/workdir tmaier/markdown-spellcheck:latest "doc/*.md" -r -a -n --en-us
+	docker run --rm -v -it $$PWD:/workdir tmaier/markdown-spellcheck:latest "doc/*.md" -r -a -n --en-us
 
 .PHONY: test
 test:
