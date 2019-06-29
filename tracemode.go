@@ -20,8 +20,8 @@ type TraceMode struct {
 	// enabled, using [Golang duration syntax](https://golang.org/pkg/time/#example_Duration).
 	Interval string `json:"interval" msgpack:"interval" bson:"interval" mapstructure:"interval,omitempty"`
 
-	// Instructs the enforcer to send records for all network
-	// initiated connections.
+	// Instructs the enforcer to send records for all
+	// network-initiated connections.
 	NetworkConnections bool `json:"networkConnections" msgpack:"networkConnections" bson:"networkconnections" mapstructure:"networkConnections,omitempty"`
 
 	ModelVersion int `json:"-" msgpack:"-" bson:"_modelversion"`

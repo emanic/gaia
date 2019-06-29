@@ -100,13 +100,13 @@ type APIAuthorizationPolicy struct {
 	// AssociatedTags are the list of tags attached to an entity.
 	AssociatedTags []string `json:"associatedTags" msgpack:"associatedTags" bson:"associatedtags" mapstructure:"associatedTags,omitempty"`
 
-	// AuthorizedIdentities defines the list of api identities the policy applies to.
+	// A list of roles assigned to the user.
 	AuthorizedIdentities []string `json:"authorizedIdentities" msgpack:"authorizedIdentities" bson:"-" mapstructure:"authorizedIdentities,omitempty"`
 
-	// AuthorizedNamespace defines on what namespace the policy applies.
+	// Defines the namespace the user is authorized to access.
 	AuthorizedNamespace string `json:"authorizedNamespace" msgpack:"authorizedNamespace" bson:"-" mapstructure:"authorizedNamespace,omitempty"`
 
-	// If set, the api authorization will only be valid if the request comes from one
+	// If set, the API authorization will only be valid if the request comes from one
 	// the declared subnets.
 	AuthorizedSubnets []string `json:"authorizedSubnets" msgpack:"authorizedSubnets" bson:"-" mapstructure:"authorizedSubnets,omitempty"`
 
@@ -122,7 +122,7 @@ type APIAuthorizationPolicy struct {
 	// Disabled defines if the propert is disabled.
 	Disabled bool `json:"disabled" msgpack:"disabled" bson:"disabled" mapstructure:"disabled,omitempty"`
 
-	// If set the policy will be auto deleted after the given time.
+	// If set, the policy will be automatically deleted after the given time.
 	ExpirationTime time.Time `json:"expirationTime" msgpack:"expirationTime" bson:"expirationtime" mapstructure:"expirationTime,omitempty"`
 
 	// Fallback indicates that this is fallback policy. It will only be
@@ -153,7 +153,7 @@ type APIAuthorizationPolicy struct {
 	// Protected defines if the object is protected.
 	Protected bool `json:"protected" msgpack:"protected" bson:"protected" mapstructure:"protected,omitempty"`
 
-	// Subject is the subject.
+	// A tag or tag expression that identifies the authorized user(s).
 	Subject [][]string `json:"subject" msgpack:"subject" bson:"-" mapstructure:"subject,omitempty"`
 
 	// internal idempotency key for a update operation.
@@ -222,13 +222,12 @@ func (o *APIAuthorizationPolicy) DefaultOrder() []string {
 // Doc returns the documentation for the object
 func (o *APIAuthorizationPolicy) Doc() string {
 
-	return `An API Authorization Policy defines what kind of operations a user of a system
-can do in a namespace. The operations can be any combination of GET, POST, PUT,
-DELETE,PATCH or HEAD. By default, an API Authorization Policy will only give
-permissions in the context of the current namespace but you can make it
-propagate to all the child namespaces. It is also possible restrict permissions
-to apply only on a particular subset of the apis by setting the target
-identities.`
+	return `An API authorization defines the operations a user can perform in a 
+namespace: ` + "`" + `GET` + "`" + `, ` + "`" + `POST` + "`" + `, ` + "`" + `PUT` + "`" + `, ` + "`" + `DELETE` + "`" + `, ` + "`" + `PATCH` + "`" + `, and/or ` + "`" + `HEAD` + "`" + `. 
+It is also possible to restrict the user to a subset of the APIs in the
+namespace by setting ` + "`" + `authorizedIdentities` + "`" + `. By default, an API authorization 
+will only give permissions in the the current namespace but you can set it to 
+propagate to all the children of the current namespace.`
 }
 
 func (o *APIAuthorizationPolicy) String() string {
@@ -860,7 +859,7 @@ The policy will be active for the given activeDuration.`,
 	"AuthorizedIdentities": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedIdentities",
-		Description:    `AuthorizedIdentities defines the list of api identities the policy applies to.`,
+		Description:    `A list of roles assigned to the user.`,
 		Exposed:        true,
 		Name:           "authorizedIdentities",
 		Required:       true,
@@ -870,7 +869,7 @@ The policy will be active for the given activeDuration.`,
 	"AuthorizedNamespace": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedNamespace",
-		Description:    `AuthorizedNamespace defines on what namespace the policy applies.`,
+		Description:    `Defines the namespace the user is authorized to access.`,
 		Exposed:        true,
 		Name:           "authorizedNamespace",
 		Required:       true,
@@ -879,7 +878,7 @@ The policy will be active for the given activeDuration.`,
 	"AuthorizedSubnets": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedSubnets",
-		Description: `If set, the api authorization will only be valid if the request comes from one
+		Description: `If set, the API authorization will only be valid if the request comes from one
 the declared subnets.`,
 		Exposed: true,
 		Name:    "authorizedSubnets",
@@ -940,7 +939,7 @@ the declared subnets.`,
 	"ExpirationTime": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "ExpirationTime",
-		Description:    `If set the policy will be auto deleted after the given time.`,
+		Description:    `If set, the policy will be automatically deleted after the given time.`,
 		Exposed:        true,
 		Getter:         true,
 		Name:           "expirationTime",
@@ -1064,7 +1063,7 @@ namespace, but still used for policy resolution.`,
 	"Subject": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Subject",
-		Description:    `Subject is the subject.`,
+		Description:    `A tag or tag expression that identifies the authorized user(s).`,
 		Exposed:        true,
 		Name:           "subject",
 		Orderable:      true,
@@ -1166,7 +1165,7 @@ The policy will be active for the given activeDuration.`,
 	"authorizedidentities": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedIdentities",
-		Description:    `AuthorizedIdentities defines the list of api identities the policy applies to.`,
+		Description:    `A list of roles assigned to the user.`,
 		Exposed:        true,
 		Name:           "authorizedIdentities",
 		Required:       true,
@@ -1176,7 +1175,7 @@ The policy will be active for the given activeDuration.`,
 	"authorizednamespace": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedNamespace",
-		Description:    `AuthorizedNamespace defines on what namespace the policy applies.`,
+		Description:    `Defines the namespace the user is authorized to access.`,
 		Exposed:        true,
 		Name:           "authorizedNamespace",
 		Required:       true,
@@ -1185,7 +1184,7 @@ The policy will be active for the given activeDuration.`,
 	"authorizedsubnets": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedSubnets",
-		Description: `If set, the api authorization will only be valid if the request comes from one
+		Description: `If set, the API authorization will only be valid if the request comes from one
 the declared subnets.`,
 		Exposed: true,
 		Name:    "authorizedSubnets",
@@ -1246,7 +1245,7 @@ the declared subnets.`,
 	"expirationtime": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "ExpirationTime",
-		Description:    `If set the policy will be auto deleted after the given time.`,
+		Description:    `If set, the policy will be automatically deleted after the given time.`,
 		Exposed:        true,
 		Getter:         true,
 		Name:           "expirationTime",
@@ -1370,7 +1369,7 @@ namespace, but still used for policy resolution.`,
 	"subject": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Subject",
-		Description:    `Subject is the subject.`,
+		Description:    `A tag or tag expression that identifies the authorized user(s).`,
 		Exposed:        true,
 		Name:           "subject",
 		Orderable:      true,
@@ -1488,13 +1487,13 @@ type SparseAPIAuthorizationPolicy struct {
 	// AssociatedTags are the list of tags attached to an entity.
 	AssociatedTags *[]string `json:"associatedTags,omitempty" msgpack:"associatedTags,omitempty" bson:"associatedtags,omitempty" mapstructure:"associatedTags,omitempty"`
 
-	// AuthorizedIdentities defines the list of api identities the policy applies to.
+	// A list of roles assigned to the user.
 	AuthorizedIdentities *[]string `json:"authorizedIdentities,omitempty" msgpack:"authorizedIdentities,omitempty" bson:"-" mapstructure:"authorizedIdentities,omitempty"`
 
-	// AuthorizedNamespace defines on what namespace the policy applies.
+	// Defines the namespace the user is authorized to access.
 	AuthorizedNamespace *string `json:"authorizedNamespace,omitempty" msgpack:"authorizedNamespace,omitempty" bson:"-" mapstructure:"authorizedNamespace,omitempty"`
 
-	// If set, the api authorization will only be valid if the request comes from one
+	// If set, the API authorization will only be valid if the request comes from one
 	// the declared subnets.
 	AuthorizedSubnets *[]string `json:"authorizedSubnets,omitempty" msgpack:"authorizedSubnets,omitempty" bson:"-" mapstructure:"authorizedSubnets,omitempty"`
 
@@ -1510,7 +1509,7 @@ type SparseAPIAuthorizationPolicy struct {
 	// Disabled defines if the propert is disabled.
 	Disabled *bool `json:"disabled,omitempty" msgpack:"disabled,omitempty" bson:"disabled,omitempty" mapstructure:"disabled,omitempty"`
 
-	// If set the policy will be auto deleted after the given time.
+	// If set, the policy will be automatically deleted after the given time.
 	ExpirationTime *time.Time `json:"expirationTime,omitempty" msgpack:"expirationTime,omitempty" bson:"expirationtime,omitempty" mapstructure:"expirationTime,omitempty"`
 
 	// Fallback indicates that this is fallback policy. It will only be
@@ -1541,7 +1540,7 @@ type SparseAPIAuthorizationPolicy struct {
 	// Protected defines if the object is protected.
 	Protected *bool `json:"protected,omitempty" msgpack:"protected,omitempty" bson:"protected,omitempty" mapstructure:"protected,omitempty"`
 
-	// Subject is the subject.
+	// A tag or tag expression that identifies the authorized user(s).
 	Subject *[][]string `json:"subject,omitempty" msgpack:"subject,omitempty" bson:"-" mapstructure:"subject,omitempty"`
 
 	// internal idempotency key for a update operation.

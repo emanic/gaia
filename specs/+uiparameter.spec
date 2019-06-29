@@ -5,20 +5,20 @@ model:
   entity_name: UIParameter
   package: ignis
   group: core/workflow
-  description: Represents a parameter that will be shown in the UI.
+  description: Represents a parameter that will be shown in the web interface.
   detached: true
 
 # Attributes
 attributes:
   v1:
   - name: advanced
-    description: Defines if the parameter is an advanced one.
+    description: A value of `true` designates the parameter as advanced.
     type: boolean
     exposed: true
     stored: true
 
   - name: allowedChoices
-    description: allowedChoices lists all the choices in case of an enum.
+    description: Lists all the choices in case of an enum.
     type: external
     exposed: true
     subtype: map[string]string
@@ -64,13 +64,13 @@ attributes:
     stored: true
 
   - name: optional
-    description: Defines if the parameter is optional.
+    description: A value of `true` designates the parameter as optional.
     type: boolean
     exposed: true
     stored: true
 
   - name: type
-    description: The type of the parameter.
+    description: The datatype of the parameter.
     type: enum
     exposed: true
     stored: true
@@ -92,7 +92,7 @@ attributes:
     example_value: String
 
   - name: validationFunction
-    description: ValidationFunction represents the function to validate the parameter.
+    description: A function that validates the parameter.
     type: string
     exposed: true
     stored: true
@@ -106,8 +106,9 @@ attributes:
 
   - name: visibilityCondition
     description: |-
-      List of ors of ands of uiparametervisibility that must be verified for the
-      parameter to be displayed to the user.
+      A logical expression consisting of one or more [UIParameterVisibility](#uiparametervisibility)
+      conditions linked together using AND or OR operators. If the expression evaluates to true 
+      the parameter is displayed to the user.
     type: external
     exposed: true
     subtype: uiparametersexpression

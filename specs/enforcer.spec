@@ -6,8 +6,8 @@ model:
   package: squall
   group: core/enforcer
   description: |-
-    An Enforcer contains all parameters associated with a registered enforcer. The
-    object is mainly by maintained by the enforcers themselves. Users can read the
+    Contains all parameters associated with a registered enforcer. The
+    object is mainly maintained by the enforcers themselves. Users can read the
     object in order to understand the current status of the enforcers.
   get:
     description: Retrieves the object with the given ID.
@@ -31,7 +31,9 @@ model:
 attributes:
   v1:
   - name: FQDN
-    description: FQDN contains the fqdn of the server where the enforcer is running.
+    description: |-
+      Contains the fully qualified domain name (FQDN) of the server where the enforcer 
+      is running.
     type: string
     exposed: true
     stored: true
@@ -41,7 +43,7 @@ attributes:
     orderable: true
 
   - name: certificate
-    description: Certificate is the certificate of the enforcer.
+    description: The certificate of the enforcer.
     type: string
     exposed: true
     stored: true
@@ -51,7 +53,7 @@ attributes:
 
   - name: certificateExpirationDate
     description: |-
-      CertificateExpirationDate is the expiration date of the certificate. This is an
+      The expiration date of the certificate. This is an
       internal attribute, not exposed in the API.
     type: time
     read_only: true
@@ -59,7 +61,7 @@ attributes:
 
   - name: certificateKey
     description: |-
-      CertificateKey is the certificate key of the enforcer. This is an internal
+      The certificate key of the enforcer. This is an internal
       attribute, not exposed in the API.
     type: string
     read_only: true
@@ -67,8 +69,9 @@ attributes:
 
   - name: certificateRequest
     description: |-
-      If not empty during a create or update generation, the provided CSR will be
-      validated and signed by the backend providing a renewed certificate.
+      If not empty during a create or update operation, the provided certificate
+      signing request (CSR) will be validated and signed by the backend, providing 
+      a renewed certificate.
     type: string
     exposed: true
     example_value: |-

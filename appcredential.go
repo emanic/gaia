@@ -83,7 +83,7 @@ func (o AppCredentialsList) Version() int {
 
 // AppCredential represents the model of a appcredential
 type AppCredential struct {
-	// CSR contains the Certificate Signing Request as a PEM encoded string. It can
+	// Contains a PEM-encoded certificate signing request (CSR). It can
 	// only be set during a renew.
 	//
 	// - The CN **MUST** be `+"`"+`app:credential:<appcred-id>:<appcred-name>`+"`"+`
@@ -101,14 +101,14 @@ type AppCredential struct {
 	// AssociatedTags are the list of tags attached to an entity.
 	AssociatedTags []string `json:"associatedTags" msgpack:"associatedTags" bson:"associatedtags" mapstructure:"associatedTags,omitempty"`
 
-	// If set, the it will only be valid if the request comes from one
+	// If set, the app credential will only be valid if the request comes from one
 	// the declared subnets.
 	AuthorizedSubnets []string `json:"authorizedSubnets" msgpack:"authorizedSubnets" bson:"authorizedsubnets" mapstructure:"authorizedSubnets,omitempty"`
 
-	// The string representation of the Certificate used by the application.
+	// The string representation of the certificate used by the app credential.
 	Certificate string `json:"certificate" msgpack:"certificate" bson:"certificate" mapstructure:"certificate,omitempty"`
 
-	// Link to the certificate created for this application.
+	// Link to the certificate created for this app credential.
 	CertificateSN string `json:"-" msgpack:"-" bson:"certificatesn" mapstructure:"-,omitempty"`
 
 	// internal idempotency key for a create operation.
@@ -117,7 +117,7 @@ type AppCredential struct {
 	// Creation date of the object.
 	CreateTime time.Time `json:"createTime" msgpack:"createTime" bson:"createtime" mapstructure:"createTime,omitempty"`
 
-	// The credential data.
+	// The app credential data.
 	Credentials *Credential `json:"credentials" msgpack:"credentials" bson:"-" mapstructure:"credentials,omitempty"`
 
 	// Description is the description of the object.
@@ -126,7 +126,7 @@ type AppCredential struct {
 	// Disabled defines if the propert is disabled.
 	Disabled bool `json:"disabled" msgpack:"disabled" bson:"disabled" mapstructure:"disabled,omitempty"`
 
-	// The email address that will receive a copy of the application credentials.
+	// The email address that will receive a copy of the app credential.
 	Email string `json:"email" msgpack:"email" bson:"email" mapstructure:"email,omitempty"`
 
 	// Metadata contains tags that can only be set during creation. They must all start
@@ -142,13 +142,14 @@ type AppCredential struct {
 	// NormalizedTags contains the list of normalized tags of the entities.
 	NormalizedTags []string `json:"normalizedTags" msgpack:"normalizedTags" bson:"normalizedtags" mapstructure:"normalizedTags,omitempty"`
 
-	// Contains the ID of the parent Appcred if this is a derived appcred.
+	// Contains the ID of the parent app credential if this is a derived app
+	// credential.
 	ParentIDs []string `json:"parentIDs" msgpack:"parentIDs" bson:"parentids" mapstructure:"parentIDs,omitempty"`
 
 	// Protected defines if the object is protected.
 	Protected bool `json:"protected" msgpack:"protected" bson:"protected" mapstructure:"protected,omitempty"`
 
-	// List of roles to give the credentials.
+	// List of roles to give the app credential.
 	Roles []string `json:"roles" msgpack:"roles" bson:"roles" mapstructure:"roles,omitempty"`
 
 	// internal idempotency key for a update operation.
@@ -735,7 +736,7 @@ var AppCredentialAttributesMap = map[string]elemental.AttributeSpecification{
 	"CSR": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "CSR",
-		Description: `CSR contains the Certificate Signing Request as a PEM encoded string. It can
+		Description: `Contains a PEM-encoded certificate signing request (CSR). It can
 only be set during a renew.
 
 - The CN **MUST** be ` + "`" + `app:credential:<appcred-id>:<appcred-name>` + "`" + `
@@ -787,7 +788,7 @@ If you send anything else, the signing request will be rejected.`,
 	"AuthorizedSubnets": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedSubnets",
-		Description: `If set, the it will only be valid if the request comes from one
+		Description: `If set, the app credential will only be valid if the request comes from one
 the declared subnets.`,
 		Exposed: true,
 		Name:    "authorizedSubnets",
@@ -798,7 +799,7 @@ the declared subnets.`,
 	"Certificate": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Certificate",
-		Description:    `The string representation of the Certificate used by the application.`,
+		Description:    `The string representation of the certificate used by the app credential.`,
 		Exposed:        true,
 		Name:           "certificate",
 		ReadOnly:       true,
@@ -808,7 +809,7 @@ the declared subnets.`,
 	"CertificateSN": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "CertificateSN",
-		Description:    `Link to the certificate created for this application.`,
+		Description:    `Link to the certificate created for this app credential.`,
 		Name:           "certificateSN",
 		Stored:         true,
 		Type:           "string",
@@ -843,7 +844,7 @@ the declared subnets.`,
 		AllowedChoices: []string{},
 		Autogenerated:  true,
 		ConvertedName:  "Credentials",
-		Description:    `The credential data.`,
+		Description:    `The app credential data.`,
 		Exposed:        true,
 		Name:           "credentials",
 		Orderable:      true,
@@ -880,7 +881,7 @@ the declared subnets.`,
 	"Email": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Email",
-		Description:    `The email address that will receive a copy of the application credentials.`,
+		Description:    `The email address that will receive a copy of the app credential.`,
 		Exposed:        true,
 		Name:           "email",
 		Orderable:      true,
@@ -953,13 +954,14 @@ with the '@' prefix, and should only be used by external systems.`,
 		AllowedChoices: []string{},
 		Autogenerated:  true,
 		ConvertedName:  "ParentIDs",
-		Description:    `Contains the ID of the parent Appcred if this is a derived appcred.`,
-		Exposed:        true,
-		Name:           "parentIDs",
-		ReadOnly:       true,
-		Stored:         true,
-		SubType:        "string",
-		Type:           "list",
+		Description: `Contains the ID of the parent app credential if this is a derived app
+credential.`,
+		Exposed:  true,
+		Name:     "parentIDs",
+		ReadOnly: true,
+		Stored:   true,
+		SubType:  "string",
+		Type:     "list",
 	},
 	"Protected": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
@@ -976,7 +978,7 @@ with the '@' prefix, and should only be used by external systems.`,
 	"Roles": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Roles",
-		Description:    `List of roles to give the credentials.`,
+		Description:    `List of roles to give the app credential.`,
 		Exposed:        true,
 		Name:           "roles",
 		Required:       true,
@@ -1045,7 +1047,7 @@ var AppCredentialLowerCaseAttributesMap = map[string]elemental.AttributeSpecific
 	"csr": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "CSR",
-		Description: `CSR contains the Certificate Signing Request as a PEM encoded string. It can
+		Description: `Contains a PEM-encoded certificate signing request (CSR). It can
 only be set during a renew.
 
 - The CN **MUST** be ` + "`" + `app:credential:<appcred-id>:<appcred-name>` + "`" + `
@@ -1097,7 +1099,7 @@ If you send anything else, the signing request will be rejected.`,
 	"authorizedsubnets": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "AuthorizedSubnets",
-		Description: `If set, the it will only be valid if the request comes from one
+		Description: `If set, the app credential will only be valid if the request comes from one
 the declared subnets.`,
 		Exposed: true,
 		Name:    "authorizedSubnets",
@@ -1108,7 +1110,7 @@ the declared subnets.`,
 	"certificate": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Certificate",
-		Description:    `The string representation of the Certificate used by the application.`,
+		Description:    `The string representation of the certificate used by the app credential.`,
 		Exposed:        true,
 		Name:           "certificate",
 		ReadOnly:       true,
@@ -1118,7 +1120,7 @@ the declared subnets.`,
 	"certificatesn": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "CertificateSN",
-		Description:    `Link to the certificate created for this application.`,
+		Description:    `Link to the certificate created for this app credential.`,
 		Name:           "certificateSN",
 		Stored:         true,
 		Type:           "string",
@@ -1153,7 +1155,7 @@ the declared subnets.`,
 		AllowedChoices: []string{},
 		Autogenerated:  true,
 		ConvertedName:  "Credentials",
-		Description:    `The credential data.`,
+		Description:    `The app credential data.`,
 		Exposed:        true,
 		Name:           "credentials",
 		Orderable:      true,
@@ -1190,7 +1192,7 @@ the declared subnets.`,
 	"email": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Email",
-		Description:    `The email address that will receive a copy of the application credentials.`,
+		Description:    `The email address that will receive a copy of the app credential.`,
 		Exposed:        true,
 		Name:           "email",
 		Orderable:      true,
@@ -1263,13 +1265,14 @@ with the '@' prefix, and should only be used by external systems.`,
 		AllowedChoices: []string{},
 		Autogenerated:  true,
 		ConvertedName:  "ParentIDs",
-		Description:    `Contains the ID of the parent Appcred if this is a derived appcred.`,
-		Exposed:        true,
-		Name:           "parentIDs",
-		ReadOnly:       true,
-		Stored:         true,
-		SubType:        "string",
-		Type:           "list",
+		Description: `Contains the ID of the parent app credential if this is a derived app
+credential.`,
+		Exposed:  true,
+		Name:     "parentIDs",
+		ReadOnly: true,
+		Stored:   true,
+		SubType:  "string",
+		Type:     "list",
 	},
 	"protected": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
@@ -1286,7 +1289,7 @@ with the '@' prefix, and should only be used by external systems.`,
 	"roles": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Roles",
-		Description:    `List of roles to give the credentials.`,
+		Description:    `List of roles to give the app credential.`,
 		Exposed:        true,
 		Name:           "roles",
 		Required:       true,
@@ -1416,7 +1419,7 @@ func (o SparseAppCredentialsList) Version() int {
 
 // SparseAppCredential represents the sparse version of a appcredential.
 type SparseAppCredential struct {
-	// CSR contains the Certificate Signing Request as a PEM encoded string. It can
+	// Contains a PEM-encoded certificate signing request (CSR). It can
 	// only be set during a renew.
 	//
 	// - The CN **MUST** be `+"`"+`app:credential:<appcred-id>:<appcred-name>`+"`"+`
@@ -1434,14 +1437,14 @@ type SparseAppCredential struct {
 	// AssociatedTags are the list of tags attached to an entity.
 	AssociatedTags *[]string `json:"associatedTags,omitempty" msgpack:"associatedTags,omitempty" bson:"associatedtags,omitempty" mapstructure:"associatedTags,omitempty"`
 
-	// If set, the it will only be valid if the request comes from one
+	// If set, the app credential will only be valid if the request comes from one
 	// the declared subnets.
 	AuthorizedSubnets *[]string `json:"authorizedSubnets,omitempty" msgpack:"authorizedSubnets,omitempty" bson:"authorizedsubnets,omitempty" mapstructure:"authorizedSubnets,omitempty"`
 
-	// The string representation of the Certificate used by the application.
+	// The string representation of the certificate used by the app credential.
 	Certificate *string `json:"certificate,omitempty" msgpack:"certificate,omitempty" bson:"certificate,omitempty" mapstructure:"certificate,omitempty"`
 
-	// Link to the certificate created for this application.
+	// Link to the certificate created for this app credential.
 	CertificateSN *string `json:"-" msgpack:"-" bson:"certificatesn,omitempty" mapstructure:"-,omitempty"`
 
 	// internal idempotency key for a create operation.
@@ -1450,7 +1453,7 @@ type SparseAppCredential struct {
 	// Creation date of the object.
 	CreateTime *time.Time `json:"createTime,omitempty" msgpack:"createTime,omitempty" bson:"createtime,omitempty" mapstructure:"createTime,omitempty"`
 
-	// The credential data.
+	// The app credential data.
 	Credentials *Credential `json:"credentials,omitempty" msgpack:"credentials,omitempty" bson:"-" mapstructure:"credentials,omitempty"`
 
 	// Description is the description of the object.
@@ -1459,7 +1462,7 @@ type SparseAppCredential struct {
 	// Disabled defines if the propert is disabled.
 	Disabled *bool `json:"disabled,omitempty" msgpack:"disabled,omitempty" bson:"disabled,omitempty" mapstructure:"disabled,omitempty"`
 
-	// The email address that will receive a copy of the application credentials.
+	// The email address that will receive a copy of the app credential.
 	Email *string `json:"email,omitempty" msgpack:"email,omitempty" bson:"email,omitempty" mapstructure:"email,omitempty"`
 
 	// Metadata contains tags that can only be set during creation. They must all start
@@ -1475,13 +1478,14 @@ type SparseAppCredential struct {
 	// NormalizedTags contains the list of normalized tags of the entities.
 	NormalizedTags *[]string `json:"normalizedTags,omitempty" msgpack:"normalizedTags,omitempty" bson:"normalizedtags,omitempty" mapstructure:"normalizedTags,omitempty"`
 
-	// Contains the ID of the parent Appcred if this is a derived appcred.
+	// Contains the ID of the parent app credential if this is a derived app
+	// credential.
 	ParentIDs *[]string `json:"parentIDs,omitempty" msgpack:"parentIDs,omitempty" bson:"parentids,omitempty" mapstructure:"parentIDs,omitempty"`
 
 	// Protected defines if the object is protected.
 	Protected *bool `json:"protected,omitempty" msgpack:"protected,omitempty" bson:"protected,omitempty" mapstructure:"protected,omitempty"`
 
-	// List of roles to give the credentials.
+	// List of roles to give the app credential.
 	Roles *[]string `json:"roles,omitempty" msgpack:"roles,omitempty" bson:"roles,omitempty" mapstructure:"roles,omitempty"`
 
 	// internal idempotency key for a update operation.

@@ -121,7 +121,7 @@ type AuditProfile struct {
 	// Protected defines if the object is protected.
 	Protected bool `json:"protected" msgpack:"protected" bson:"protected" mapstructure:"protected,omitempty"`
 
-	// Rules is the list of audit policy rules associated with this policy.
+	// List of audit rules associated with this profile.
 	Rules types.AuditProfileRuleList `json:"rules" msgpack:"rules" bson:"rules" mapstructure:"rules,omitempty"`
 
 	// internal idempotency key for a update operation.
@@ -196,8 +196,8 @@ func (o *AuditProfile) DefaultOrder() []string {
 // Doc returns the documentation for the object
 func (o *AuditProfile) Doc() string {
 
-	return `AuditProfile is an audit policy that consists of a set of audit rules. An audit
-policy will determine that types of events that must be captured in the kernel.`
+	return `A set of audit rules that determine the types of events that must be captured in 
+the kernel.`
 }
 
 func (o *AuditProfile) String() string {
@@ -806,7 +806,7 @@ with the '@' prefix, and should only be used by external systems.`,
 	"Rules": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Rules",
-		Description:    `Rules is the list of audit policy rules associated with this policy.`,
+		Description:    `List of audit rules associated with this profile.`,
 		Exposed:        true,
 		Name:           "rules",
 		Stored:         true,
@@ -1037,7 +1037,7 @@ with the '@' prefix, and should only be used by external systems.`,
 	"rules": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Rules",
-		Description:    `Rules is the list of audit policy rules associated with this policy.`,
+		Description:    `List of audit rules associated with this profile.`,
 		Exposed:        true,
 		Name:           "rules",
 		Stored:         true,
@@ -1203,7 +1203,7 @@ type SparseAuditProfile struct {
 	// Protected defines if the object is protected.
 	Protected *bool `json:"protected,omitempty" msgpack:"protected,omitempty" bson:"protected,omitempty" mapstructure:"protected,omitempty"`
 
-	// Rules is the list of audit policy rules associated with this policy.
+	// List of audit rules associated with this profile.
 	Rules *types.AuditProfileRuleList `json:"rules,omitempty" msgpack:"rules,omitempty" bson:"rules,omitempty" mapstructure:"rules,omitempty"`
 
 	// internal idempotency key for a update operation.

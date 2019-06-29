@@ -130,8 +130,7 @@ type AuditProfileMappingPolicy struct {
 	// NormalizedTags contains the list of normalized tags of the entities.
 	NormalizedTags []string `json:"normalizedTags" msgpack:"normalizedTags" bson:"normalizedtags" mapstructure:"normalizedTags,omitempty"`
 
-	// Object of the policy is the selector of the audit profiles that must be applied
-	// based on this policy.
+	// The tag or tag expression that identifies the audit profile to be mapped.
 	Object [][]string `json:"object" msgpack:"object" bson:"-" mapstructure:"object,omitempty"`
 
 	// Propagate will propagate the policy to all of its children.
@@ -140,8 +139,7 @@ type AuditProfileMappingPolicy struct {
 	// Protected defines if the object is protected.
 	Protected bool `json:"protected" msgpack:"protected" bson:"protected" mapstructure:"protected,omitempty"`
 
-	// Subject of the policy is a selector of the enforcers that must implement the
-	// policy.
+	// The tag or tag expression that identifies the enforcer(s) to implement the audit profile.
 	Subject [][]string `json:"subject" msgpack:"subject" bson:"-" mapstructure:"subject,omitempty"`
 
 	// internal idempotency key for a update operation.
@@ -209,8 +207,8 @@ func (o *AuditProfileMappingPolicy) DefaultOrder() []string {
 // Doc returns the documentation for the object
 func (o *AuditProfileMappingPolicy) Doc() string {
 
-	return `Defines an audit policy that determine the sets of enforcers that must implement
-a specific audit profile.`
+	return `Use an audit profile mapping to define the set of enforcers that must 
+implement a specific audit profile.`
 }
 
 func (o *AuditProfileMappingPolicy) String() string {
@@ -905,12 +903,11 @@ with the '@' prefix, and should only be used by external systems.`,
 	"Object": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Object",
-		Description: `Object of the policy is the selector of the audit profiles that must be applied
-based on this policy.`,
-		Exposed: true,
-		Name:    "object",
-		SubType: "[][]string",
-		Type:    "external",
+		Description:    `The tag or tag expression that identifies the audit profile to be mapped.`,
+		Exposed:        true,
+		Name:           "object",
+		SubType:        "[][]string",
+		Type:           "external",
 	},
 	"Propagate": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
@@ -939,12 +936,11 @@ based on this policy.`,
 	"Subject": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Subject",
-		Description: `Subject of the policy is a selector of the enforcers that must implement the
-policy.`,
-		Exposed: true,
-		Name:    "subject",
-		SubType: "[][]string",
-		Type:    "external",
+		Description:    `The tag or tag expression that identifies the enforcer(s) to implement the audit profile.`,
+		Exposed:        true,
+		Name:           "subject",
+		SubType:        "[][]string",
+		Type:           "external",
 	},
 	"UpdateIdempotencyKey": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
@@ -1168,12 +1164,11 @@ with the '@' prefix, and should only be used by external systems.`,
 	"object": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Object",
-		Description: `Object of the policy is the selector of the audit profiles that must be applied
-based on this policy.`,
-		Exposed: true,
-		Name:    "object",
-		SubType: "[][]string",
-		Type:    "external",
+		Description:    `The tag or tag expression that identifies the audit profile to be mapped.`,
+		Exposed:        true,
+		Name:           "object",
+		SubType:        "[][]string",
+		Type:           "external",
 	},
 	"propagate": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
@@ -1202,12 +1197,11 @@ based on this policy.`,
 	"subject": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
 		ConvertedName:  "Subject",
-		Description: `Subject of the policy is a selector of the enforcers that must implement the
-policy.`,
-		Exposed: true,
-		Name:    "subject",
-		SubType: "[][]string",
-		Type:    "external",
+		Description:    `The tag or tag expression that identifies the enforcer(s) to implement the audit profile.`,
+		Exposed:        true,
+		Name:           "subject",
+		SubType:        "[][]string",
+		Type:           "external",
 	},
 	"updateidempotencykey": elemental.AttributeSpecification{
 		AllowedChoices: []string{},
@@ -1350,8 +1344,7 @@ type SparseAuditProfileMappingPolicy struct {
 	// NormalizedTags contains the list of normalized tags of the entities.
 	NormalizedTags *[]string `json:"normalizedTags,omitempty" msgpack:"normalizedTags,omitempty" bson:"normalizedtags,omitempty" mapstructure:"normalizedTags,omitempty"`
 
-	// Object of the policy is the selector of the audit profiles that must be applied
-	// based on this policy.
+	// The tag or tag expression that identifies the audit profile to be mapped.
 	Object *[][]string `json:"object,omitempty" msgpack:"object,omitempty" bson:"-" mapstructure:"object,omitempty"`
 
 	// Propagate will propagate the policy to all of its children.
@@ -1360,8 +1353,7 @@ type SparseAuditProfileMappingPolicy struct {
 	// Protected defines if the object is protected.
 	Protected *bool `json:"protected,omitempty" msgpack:"protected,omitempty" bson:"protected,omitempty" mapstructure:"protected,omitempty"`
 
-	// Subject of the policy is a selector of the enforcers that must implement the
-	// policy.
+	// The tag or tag expression that identifies the enforcer(s) to implement the audit profile.
 	Subject *[][]string `json:"subject,omitempty" msgpack:"subject,omitempty" bson:"-" mapstructure:"subject,omitempty"`
 
 	// internal idempotency key for a update operation.
