@@ -6,7 +6,7 @@ model:
   package: squall
   group: policy/services
   description: |-
-    The TokenScopePolicy defines a set of policies that allow customization of the
+    Defines a set of policies that allow customization of the
     authorization tokens issued by the Aporeto service. This allows Aporeto
     generated tokens to be used by external applications.
   aliases:
@@ -40,7 +40,7 @@ indexes:
 attributes:
   v1:
   - name: assignedScopes
-    description: AssignedScopes is the the list of scopes that the policiy will assigns.
+    description: The list of scopes that the policy will assign.
     type: list
     exposed: true
     subtype: string
@@ -48,7 +48,7 @@ attributes:
     orderable: true
 
   - name: expirationTime
-    description: If set the policy will be auto deleted after the given time.
+    description: If set the policy will be automatically deleted after the given time.
     type: time
     exposed: true
     stored: true
@@ -57,7 +57,7 @@ attributes:
 
   - name: subject
     description: |-
-      Subject defines the selection criteria that this policy must match on identiy
+      Defines the selection criteria that this policy must match on identiy
       and scope request information.
     type: external
     exposed: true

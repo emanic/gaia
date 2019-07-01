@@ -6,8 +6,7 @@ model:
   package: squall
   group: core
   description: |-
-    Render is a low level api that allows to render policies of given tyoe for a
-    given set of tags.
+    Allows you to render policies of given tyoe for a given set of tags.
 
 # Attributes
 attributes:
@@ -22,8 +21,9 @@ attributes:
 
   - name: processMode
     description: |-
-      Define if the processMode should be using the object or subject. This only has
-      effect when rendering a SSHAuthorizationPolicy for now.
+      `Subject` (default): Set if the `processMode` should use the subject. `Object`: Set if 
+      the `processMode` should use the object. This only has effect when rendering an SSH 
+      authorization for now.
     type: enum
     exposed: true
     allowed_choices:
@@ -32,7 +32,7 @@ attributes:
     default_value: Subject
 
   - name: tags
-    description: List of tags of the object to render the hook policy for.
+    description: List of tags of the object to render the hook for.
     type: list
     exposed: true
     subtype: string
@@ -42,7 +42,10 @@ attributes:
     - b=b
 
   - name: type
-    description: Type of the policy to render.
+    description: |-
+      Type of policy to render. `APIAuthorization`, `EnforcerProfile`, `File`, `Hook`, 
+      `Infrastructure`, `NamespaceMapping`, `Network`, `ProcessingUnit`, `Quota`, `Syscall`, 
+      `TokenScope`, or `SSHAuthorization`. 
     type: enum
     exposed: true
     required: true
