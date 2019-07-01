@@ -10,11 +10,11 @@ model:
     object is mainly maintained by the enforcers themselves. Users can read the
     object in order to understand the current status of the enforcers.
   get:
-    description: Retrieves the object with the given ID.
+    description: Retrieves the enforcer with the given ID.
   update:
-    description: Updates the object with the given ID.
+    description: Updates the enforcer with the given ID.
   delete:
-    description: Deletes the object with the given ID.
+    description: Deletes the enforcer with the given ID.
     global_parameters:
     - $filtering
   extends:
@@ -32,8 +32,8 @@ attributes:
   v1:
   - name: FQDN
     description: |-
-      Contains the fully qualified domain name (FQDN) of the server where the enforcer 
-      is running.
+      Contains the fully qualified domain name (FQDN) of the server where the 
+      enforcer is running.
     type: string
     exposed: true
     stored: true
@@ -70,8 +70,8 @@ attributes:
   - name: certificateRequest
     description: |-
       If not empty during a create or update operation, the provided certificate
-      signing request (CSR) will be validated and signed by the backend, providing 
-      a renewed certificate.
+      signing request (CSR) will be validated and signed by the control plane, 
+      providing a renewed certificate.
     type: string
     exposed: true
     example_value: |-
@@ -95,13 +95,14 @@ attributes:
     transient: true
 
   - name: collectInfo
-    description: CollectInfo indicates to the enforcer it needs to collect information.
+    description: |-
+      Indicates to the enforcer whether or not it needs to collect information.
     type: boolean
     exposed: true
     stored: true
 
   - name: collectedInfo
-    description: CollectedInfo represents the latest info collected by the enforcer.
+    description: Represents the latest information collected by the enforcer.
     type: external
     exposed: true
     subtype: map[string]string
@@ -109,8 +110,7 @@ attributes:
 
   - name: currentVersion
     description: |-
-      CurrentVersion holds the enforcerd binary version that is currently associated
-      to this object.
+      The version number of the installed enforcer binary.
     type: string
     exposed: true
     stored: true
@@ -118,8 +118,10 @@ attributes:
     orderable: true
 
   - name: enforcementStatus
-    description: Status of enforcement for PU managed directly by enforcerd, like
-      Host PUs.
+    description: |-
+       Contains one of the following values: `Inactive` (default): the enforcer 
+       is not enforcing any host service. `Active`: the enforcer is enforcing a 
+       host service. `Failed`.
     type: enum
     exposed: true
     stored: true
@@ -132,19 +134,18 @@ attributes:
 
   - name: lastCollectionTime
     description: |-
-      LastCollectionTime represents the date and time when the info have been
-      collected.
+      Identifies when the information was collected.
     type: time
     exposed: true
     stored: true
 
   - name: lastPokeTime
-    description: Last poke is the time when the enforcer got last poked.
+    description: The time and date of the last poke.
     type: time
     stored: true
 
   - name: lastSyncTime
-    description: LastSyncTime holds the last heart beat time.
+    description: The time and date of the last heartbeat.
     type: time
     exposed: true
     stored: true
@@ -163,7 +164,7 @@ attributes:
 
   - name: localCA
     description: |-
-      LocalCA contains the initial chain of trust for the enforcer. This valud is only
+      Contains the initial chain of trust for the enforcer. This value is only 
       given when you retrieve a single enforcer.
     type: string
     exposed: true
@@ -172,9 +173,9 @@ attributes:
 
   - name: machineID
     description: |-
-      MachineID holds a unique identifier for every machine as detected by the
-      enforcer. It is based on hardware information such as the SMBIOS UUID, MAC
-      addresses of interfaces or cloud provider IDs.
+      A unique identifier for every machine as detected by the enforcer. It is 
+      based on hardware information such as the SMBIOS UUID, MAC addresses of 
+      interfaces, or cloud provider IDs.
     type: string
     exposed: true
     stored: true
@@ -182,7 +183,7 @@ attributes:
     filterable: true
 
   - name: operationalStatus
-    description: OperationalStatus tells the status of the enforcer.
+    description: The status of the enforcer.
     type: enum
     exposed: true
     stored: true
@@ -196,8 +197,8 @@ attributes:
 
   - name: publicToken
     description: |-
-      PublicToken is the public token of the server that will be included in the
-      datapath and its signed by the private CA.
+      The public token of the server that will be included in the datapath and 
+      is signed by the private certificate authority.
     type: string
     exposed: true
     stored: true
@@ -207,8 +208,8 @@ attributes:
 
   - name: startTime
     description: |-
-      startTime holds the time this enforcerd was started. This time-stamp is reported
-      by the enforcer and is is preserved across disconnects.
+      The time and date on which this enforcer was started. The enforcer reports
+      this and the value is preserved across disconnects.
     type: time
     exposed: true
     stored: true
@@ -223,8 +224,8 @@ attributes:
 
   - name: unreachable
     description: |-
-      Control plane will set this value to true if it hasn't heard from the enforcer
-      for more than 5m.
+      The Aporeto control plane sets this value to `true` if it hasn't heard from 
+      the enforcer in the last five minutes.
     type: boolean
     exposed: true
     stored: true
@@ -232,7 +233,8 @@ attributes:
     autogenerated: true
 
   - name: updateAvailable
-    description: Tells if the the version of enforcerd is outdated and should be updated.
+    description: |-
+      If `true`, the enforcer version is outdated and should be updated.
     type: boolean
     exposed: true
     stored: true
@@ -327,7 +329,7 @@ relations:
 
 - rest_name: trustedca
   get:
-    description: Returns the list of CAs that should be trusted by this enforcer.
+    description: Returns the list of certificate authorities that should be trusted by this enforcer.
     parameters:
       entries:
       - name: type
