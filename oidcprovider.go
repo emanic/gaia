@@ -295,7 +295,7 @@ func (o *OIDCProvider) DefaultOrder() []string {
 // Doc returns the documentation for the object
 func (o *OIDCProvider) Doc() string {
 
-	return `Allows to declare a generic OpenID Connect (OIDC) provider that can be used in
+	return `Allows you to declare a generic OpenID Connect (OIDC) provider that can be used in
 exchange
 for a Midgard token.`
 }

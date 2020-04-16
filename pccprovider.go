@@ -92,7 +92,7 @@ type PCCProvider struct {
 	// List of tags attached to an entity.
 	AssociatedTags []string `json:"associatedTags" msgpack:"associatedTags" bson:"associatedtags" mapstructure:"associatedTags,omitempty"`
 
-	// Set the CA to use to contact the PCC service in case it uses a non widely trust
+	// Set the CA to use to contact the PCC service in case it uses a non widely trusted
 	// certificate authority.
 	CertificateAuthority string `json:"certificateAuthority" msgpack:"certificateAuthority" bson:"certificateauthority" mapstructure:"certificateAuthority,omitempty"`
 
@@ -261,7 +261,7 @@ func (o *PCCProvider) DefaultOrder() []string {
 // Doc returns the documentation for the object
 func (o *PCCProvider) Doc() string {
 
-	return `Allows to declare a PCC auth provider that can be use to trust PCC JWT.`
+	return `Allows you to declare a trusted Prisma Cloud Compute (PCC) authentication provider. Aporeto will accept JSON web tokens (JWT) from the specified PCC provider.`
 }
 
 func (o *PCCProvider) String() string {
@@ -721,7 +721,7 @@ var PCCProviderAttributesMap = map[string]elemental.AttributeSpecification{
 	"CertificateAuthority": {
 		AllowedChoices: []string{},
 		ConvertedName:  "CertificateAuthority",
-		Description: `Set the CA to use to contact the PCC service in case it uses a non widely trust
+		Description: `Set the CA to use to contact the PCC service in case it uses a non widely trusted
 certificate authority.`,
 		Exposed: true,
 		Name:    "certificateAuthority",
@@ -941,7 +941,7 @@ var PCCProviderLowerCaseAttributesMap = map[string]elemental.AttributeSpecificat
 	"certificateauthority": {
 		AllowedChoices: []string{},
 		ConvertedName:  "CertificateAuthority",
-		Description: `Set the CA to use to contact the PCC service in case it uses a non widely trust
+		Description: `Set the CA to use to contact the PCC service in case it uses a non widely trusted
 certificate authority.`,
 		Exposed: true,
 		Name:    "certificateAuthority",
@@ -1192,7 +1192,7 @@ type SparsePCCProvider struct {
 	// List of tags attached to an entity.
 	AssociatedTags *[]string `json:"associatedTags,omitempty" msgpack:"associatedTags,omitempty" bson:"associatedtags,omitempty" mapstructure:"associatedTags,omitempty"`
 
-	// Set the CA to use to contact the PCC service in case it uses a non widely trust
+	// Set the CA to use to contact the PCC service in case it uses a non widely trusted
 	// certificate authority.
 	CertificateAuthority *string `json:"certificateAuthority,omitempty" msgpack:"certificateAuthority,omitempty" bson:"certificateauthority,omitempty" mapstructure:"certificateAuthority,omitempty"`
 

@@ -18,12 +18,12 @@ attributes:
     example_value: xxx-xxx-xxx-xxx
 
   - name: destinationID
-    description: ID of the destination PU.
+    description: ID of the destination processing unit.
     type: string
     exposed: true
 
   - name: destinationNamespace
-    description: Namespace of the destination PU.
+    description: Namespace of the destination processing unit.
     type: string
     exposed: true
 
@@ -89,7 +89,7 @@ attributes:
     example_value: xxx-xxx-xxx-xxx
 
   - name: sourceNamespace
-    description: Namespace of the source PU.
+    description: Namespace of the source processing unit.
     type: string
     exposed: true
     required: true

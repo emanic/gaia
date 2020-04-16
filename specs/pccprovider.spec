@@ -5,8 +5,9 @@ model:
   entity_name: PCCProvider
   package: cactuar
   group: core/authentication
-  description: Allows to declare a PCC auth provider that can be use to trust PCC
-    JWT.
+  description: Allows you to declare a trusted Prisma Cloud Compute (PCC) 
+    authentication provider. Aporeto will accept JSON web tokens (JWT) from
+    the specified PCC provider.
   get:
     description: Retrieves the provider with the given ID.
   update:
@@ -29,7 +30,7 @@ attributes:
   v1:
   - name: certificateAuthority
     description: |-
-      Set the CA to use to contact the PCC service in case it uses a non widely trust
+      Set the CA to use to contact the PCC service in case it uses a non widely trusted
       certificate authority.
     type: string
     exposed: true
