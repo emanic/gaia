@@ -5,9 +5,13 @@
 Aporeto provides a REST API to allow programmatic manipulation of the control plane.
 Everything the web client or apoctl do is done through the Control Plane API.
 
+## Object types
+
 The Control Plane API accepts and returns [JSON](https://www.json.org) or [MessagePack](https://msgpack.org)
 encoded objects.
 This is controlled by the the `Accept` and `Content-Type` HTTP headers.
+
+## Authentication and authorization
 
 Most of the resources require authentication and authorization.
 
