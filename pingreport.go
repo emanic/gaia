@@ -84,10 +84,10 @@ type PingReport struct {
 	// ID unique to a single origin and reply report.
 	ID string `json:"ID" msgpack:"ID" bson:"-" mapstructure:"ID,omitempty"`
 
-	// ID of the destination PU.
+	// ID of the destination processing unit.
 	DestinationID string `json:"destinationID" msgpack:"destinationID" bson:"-" mapstructure:"destinationID,omitempty"`
 
-	// Namespace of the destination PU.
+	// Namespace of the destination processing unit.
 	DestinationNamespace string `json:"destinationNamespace" msgpack:"destinationNamespace" bson:"-" mapstructure:"destinationNamespace,omitempty"`
 
 	// ID of the enforcer.
@@ -123,7 +123,7 @@ type PingReport struct {
 	// ID of the source PU.
 	SourceID string `json:"sourceID" msgpack:"sourceID" bson:"-" mapstructure:"sourceID,omitempty"`
 
-	// Namespace of the source PU.
+	// Namespace of the source processing unit.
 	SourceNamespace string `json:"sourceNamespace" msgpack:"sourceNamespace" bson:"-" mapstructure:"sourceNamespace,omitempty"`
 
 	// Stage when the packet is received.
@@ -485,7 +485,7 @@ var PingReportAttributesMap = map[string]elemental.AttributeSpecification{
 	"DestinationID": {
 		AllowedChoices: []string{},
 		ConvertedName:  "DestinationID",
-		Description:    `ID of the destination PU.`,
+		Description:    `ID of the destination processing unit.`,
 		Exposed:        true,
 		Name:           "destinationID",
 		Type:           "string",
@@ -493,7 +493,7 @@ var PingReportAttributesMap = map[string]elemental.AttributeSpecification{
 	"DestinationNamespace": {
 		AllowedChoices: []string{},
 		ConvertedName:  "DestinationNamespace",
-		Description:    `Namespace of the destination PU.`,
+		Description:    `Namespace of the destination processing unit.`,
 		Exposed:        true,
 		Name:           "destinationNamespace",
 		Type:           "string",
@@ -592,7 +592,7 @@ var PingReportAttributesMap = map[string]elemental.AttributeSpecification{
 	"SourceNamespace": {
 		AllowedChoices: []string{},
 		ConvertedName:  "SourceNamespace",
-		Description:    `Namespace of the source PU.`,
+		Description:    `Namespace of the source processing unit.`,
 		Exposed:        true,
 		Name:           "sourceNamespace",
 		Required:       true,
@@ -630,7 +630,7 @@ var PingReportLowerCaseAttributesMap = map[string]elemental.AttributeSpecificati
 	"destinationid": {
 		AllowedChoices: []string{},
 		ConvertedName:  "DestinationID",
-		Description:    `ID of the destination PU.`,
+		Description:    `ID of the destination processing unit.`,
 		Exposed:        true,
 		Name:           "destinationID",
 		Type:           "string",
@@ -638,7 +638,7 @@ var PingReportLowerCaseAttributesMap = map[string]elemental.AttributeSpecificati
 	"destinationnamespace": {
 		AllowedChoices: []string{},
 		ConvertedName:  "DestinationNamespace",
-		Description:    `Namespace of the destination PU.`,
+		Description:    `Namespace of the destination processing unit.`,
 		Exposed:        true,
 		Name:           "destinationNamespace",
 		Type:           "string",
@@ -737,7 +737,7 @@ var PingReportLowerCaseAttributesMap = map[string]elemental.AttributeSpecificati
 	"sourcenamespace": {
 		AllowedChoices: []string{},
 		ConvertedName:  "SourceNamespace",
-		Description:    `Namespace of the source PU.`,
+		Description:    `Namespace of the source processing unit.`,
 		Exposed:        true,
 		Name:           "sourceNamespace",
 		Required:       true,
@@ -827,10 +827,10 @@ type SparsePingReport struct {
 	// ID unique to a single origin and reply report.
 	ID *string `json:"ID,omitempty" msgpack:"ID,omitempty" bson:"-" mapstructure:"ID,omitempty"`
 
-	// ID of the destination PU.
+	// ID of the destination processing unit.
 	DestinationID *string `json:"destinationID,omitempty" msgpack:"destinationID,omitempty" bson:"-" mapstructure:"destinationID,omitempty"`
 
-	// Namespace of the destination PU.
+	// Namespace of the destination processing unit.
 	DestinationNamespace *string `json:"destinationNamespace,omitempty" msgpack:"destinationNamespace,omitempty" bson:"-" mapstructure:"destinationNamespace,omitempty"`
 
 	// ID of the enforcer.
@@ -866,7 +866,7 @@ type SparsePingReport struct {
 	// ID of the source PU.
 	SourceID *string `json:"sourceID,omitempty" msgpack:"sourceID,omitempty" bson:"-" mapstructure:"sourceID,omitempty"`
 
-	// Namespace of the source PU.
+	// Namespace of the source processing unit.
 	SourceNamespace *string `json:"sourceNamespace,omitempty" msgpack:"sourceNamespace,omitempty" bson:"-" mapstructure:"sourceNamespace,omitempty"`
 
 	// Stage when the packet is received.

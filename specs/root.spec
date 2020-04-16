@@ -577,7 +577,7 @@ relations:
 
 - rest_name: oidcprovider
   get:
-    description: Retrieves the list of the OIDC providers.
+    description: Retrieves the list of OIDC providers.
     global_parameters:
     - $filtering
   create:

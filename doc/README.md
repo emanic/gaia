@@ -1,13 +1,17 @@
-# Aporeto API concepts and usage
+# Control Plane API concepts and usage
 
 ## Overview
 
-Aporeto provides a REST API to allow programmatic manipulation of all parts of the system.
-Everything the web client or apoctl do is done through the REST API.
+Aporeto provides a REST API to allow programmatic manipulation of the control plane.
+Everything the web client or apoctl do is done through the Control Plane API.
 
-The Aporeto API accepts and returns [JSON](https://www.json.org) or [MessagePack](https://msgpack.org)
+## Object types
+
+The Control Plane API accepts and returns [JSON](https://www.json.org) or [MessagePack](https://msgpack.org)
 encoded objects.
 This is controlled by the the `Accept` and `Content-Type` HTTP headers.
+
+## Authentication and authorization
 
 Most of the resources require authentication and authorization.
 
@@ -58,10 +62,8 @@ The error codes follow the HTTP status codes:
 - `500 Internal Server Error`: Something wrong happened in the server
 - `502 Bad Gateway`, `503 Service Unavailable`, `504 Gateway Timeout`: Temporary communication failure.
 
-:::note
 There may be additional error codes in certain circumstances.
 Please refer to the HTTP error code documentation for more information.
-:::
 
 ## Authentication
 
@@ -155,9 +157,9 @@ curl https://api.console.aporeto.com/issue \
 
 ### Authenticating with an X.509 certificate
 
-:::note
+{{< note >}}
 How to retrieve an X.509 certificate from Aporeto is not in the scope of this document.
-:::
+{{< /note >}}
 
 To use an X.509 user certificate, you must configure your client to pass it on the
 TLS layer.
@@ -224,7 +226,7 @@ curl https://api.console.aporeto.com/namespaces \
 
 ## Idempotency
 
-The Aporeto API supports [idempotency](https://en.wikipedia.org/wiki/Idempotence) for `POST` operations.
+The Control Plane API supports [idempotency](https://en.wikipedia.org/wiki/Idempotence) for `POST` operations.
 This allows you to safely retry requests that returned a communication error, but actually were honored by the system.
 
 If you issue two subsequent `POST` requests with the same idempotency key, the second will return the exact same response as the first one, while it will not have done anything in the system.
@@ -293,7 +295,7 @@ And the second one:
 
 ### Hierarchy layout
 
-The Aporeto API follows a three-level structure to traverse the hierarchy.
+The Control Plane API follows a three-level structure to traverse the hierarchy.
 For instance, for an hypothetical object `parent` that can have `children` who can in turn
 have `grandchildren`, Aporeto lays out the API URLs as follows:
 
@@ -306,7 +308,7 @@ have `grandchildren`, Aporeto lays out the API URLs as follows:
 
 ### Methods
 
-The Aporeto API uses standard HTTP methods to perform actions on resources.
+The Control Plane API uses standard HTTP methods to perform actions on resources.
 Not all methods apply to all URLs.
 
 - `GET`: Retrieves many or retrieve one.
