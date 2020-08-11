@@ -9,7 +9,7 @@ The Microsegmentation Console web interface and `apoctl` are clients of the Micr
 
 The Microsegmentation Console API accepts and returns [JSON](https://www.json.org) or [MessagePack](https://msgpack.org)
 encoded objects.
-This is controlled by the the `Accept` and `Content-Type` HTTP headers.
+This is controlled by the `Accept` and `Content-Type` HTTP headers.
 
 ## Authentication and authorization
 
